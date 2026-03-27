@@ -1,1 +1,964 @@
-[HTML_CONTENT_HERE]
+<!DOCTYPE html>
+<html lang="uz"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nizom Nizamov — Shaxsiy Havolalar Markazi</title>
+    <meta name="description" content="Nizom Nizamov — Raqamli Marketing Mutaxassisi va UX/UI Dizayner. Samarqand, O'zbekiston. Barcha ijtimoiy tarmoqlar va portfolio bir joyda.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS RESET & VARIABLES ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-card: rgba(255, 255, 255, 0.7);
+            --bg-card-hover: rgba(255, 255, 255, 0.95);
+            --border-glass: rgba(0, 0, 0, 0.06);
+            --border-glass-hover: rgba(59, 130, 246, 0.3);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-tertiary: #64748b;
+            --accent-blue: #2563eb;
+            --accent-cyan: #06b6d4;
+            --accent-blue-glow: rgba(37, 99, 235, 0.15);
+            --accent-gradient: linear-gradient(135deg, #2563eb, #06b6d4);
+            --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --shadow-card-hover: 0 10px 30px rgba(37, 99, 235, 0.1);
+            --radius-btn: 15px;
+            --radius-card: 20px;
+            --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ===== 3D BACKGROUND CANVAS ===== */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ===== AMBIENT BACKGROUND ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+            animation: ambientFloat 8s ease-in-out infinite;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -15%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.06) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+            animation: ambientFloat 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes ambientFloat {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(30px); }
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .container {
+            width: 100%;
+            max-width: 420px;
+            padding: 48px 24px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== HEADER / PROFILE ===== */
+        .profile {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 24px;
+        }
+
+        .avatar-ring {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            padding: 3px;
+            animation: ring-rotate 4s linear infinite;
+        }
+
+        .avatar-ring::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            opacity: 0.25;
+            filter: blur(16px);
+            animation: ring-glow 3s ease-in-out infinite;
+        }
+
+        .avatar-ring::after {
+            content: '';
+            position: absolute;
+            inset: -14px;
+            border-radius: 50%;
+            border: 1px dashed rgba(56, 189, 248, 0.15);
+            animation: ring-rotate-reverse 12s linear infinite;
+        }
+
+        @keyframes ring-rotate {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        @keyframes ring-rotate-reverse {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(-360deg); }
+        }
+
+        @keyframes ring-glow {
+            0%, 100% { opacity: 0.15; transform: scale(1); }
+            50% { opacity: 0.35; transform: scale(1.08); }
+        }
+
+        .avatar-img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+            position: relative;
+            z-index: 2;
+            border: 3px solid var(--bg-primary);
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .avatar-img svg {
+            width: 48px;
+            height: 48px;
+            opacity: 0.5;
+        }
+
+        .profile-name {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            color: var(--accent-blue); /* Changed color */
+        }
+
+        .profile-title {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            letter-spacing: 0.3px;
+        }
+
+        .profile-location {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-tertiary);
+        }
+
+        .profile-location svg {
+            width: 14px;
+            height: 14px;
+            color: var(--accent-blue);
+            flex-shrink: 0;
+        }
+
+        /* ===== SECTION LABEL ===== */
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            margin-bottom: 16px;
+            padding-left: 4px;
+        }
+
+        /* ===== LINK BUTTONS ===== */
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 44px;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-btn);
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03); /* Changed shadow */
+        }
+
+        .link-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.05) 0%, transparent 50%);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .link-btn:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-glass-hover);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.1); /* Changed shadow */
+            transform: translateY(-4px) scale(1.01); /* Changed transform */
+        }
+
+        .link-btn:hover::before {
+            opacity: 1;
+        }
+
+        .link-btn:active {
+            transform: translateY(0);
+        }
+
+        .link-btn .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: rgba(37, 99, 235, 0.08);
+            color: var(--accent-blue);
+            transition: var(--transition);
+        }
+
+        .link-btn:hover .icon {
+            background: var(--accent-gradient);
+            color: #ffffff;
+            transform: scale(1.05) rotate(-3deg);
+        }
+
+        .link-btn .icon svg {
+            width: 20px;
+            height: 20px;
+            color: currentColor;
+            transition: var(--transition);
+        }
+
+        .link-btn:hover .icon svg {
+            color: #ffffff;
+        }
+
+        .link-btn .label {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+        }
+
+        .link-btn .chevron {
+            width: 18px;
+            height: 18px;
+            color: var(--text-tertiary);
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .link-btn:hover .chevron {
+            color: var(--accent-blue);
+            transform: translateX(3px);
+        }
+
+        /* ===== STATS ROW ===== */
+        .stats-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            flex: 1;
+            padding: 16px 12px;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            border-color: var(--border-glass-hover);
+            transform: translateY(-2px);
+        }
+
+        .stat-number {
+            font-size: 22px;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 13px; /* Changed font-size */
+            font-weight: 500;
+            color: var(--text-secondary); /* Changed color and removed letter-spacing */
+        }
+
+        /* ===== FEATURED SECTION ===== */
+        .featured {
+            margin-bottom: 44px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--accent-gradient);
+            border-radius: 2px;
+        }
+
+        .cards-scroll {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            scroll-snap-type: x mandatory;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .cards-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .card {
+            min-width: 260px; /* Corrected from 260 */
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-card);
+            position: relative; /* Added position */
+            overflow: hidden;
+            display: flex; /* Added display */
+            flex-direction: column; /* Added flex-direction */
+            transition: var(--transition);
+            text-decoration: none; /* Added text-decoration */
+            color: var(--text-primary); /* Added color */
+            scroll-snap-align: start;
+            cursor: pointer;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-card);
+        }
+
+        .card:hover {
+            border-color: var(--border-glass-hover);
+            box-shadow: var(--shadow-card-hover);
+            transform: translateY(-6px); /* Changed transform */
+            background: var(--bg-card-hover); /* Added background */
+        }
+
+        .card-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-body {
+            padding: 18px;
+        }
+
+        .card-divider {
+            width: 36px;
+            height: 3px;
+            background: var(--accent-gradient);
+            border-radius: 2px;
+            margin-bottom: 14px;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.2px;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding-top: 8px;
+        }
+
+        .social-icons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .social-icon {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            color: var(--text-tertiary);
+            transition: var(--transition);
+            text-decoration: none;
+            background: transparent;
+        }
+
+        .social-icon:hover {
+            color: #ffffff;
+            background: var(--accent-gradient);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .social-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .copyright {
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--text-tertiary);
+            opacity: 0.6;
+            letter-spacing: 0.3px;
+        }
+
+        /* ===== DIVIDER ===== */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.15), transparent);
+            margin: 8px 0 32px;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            opacity: 0;
+            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .profile { animation-delay: 0.1s; }
+        .link-btn:nth-child(1) { animation-delay: 0.15s; }
+        .link-btn:nth-child(2) { animation-delay: 0.2s; }
+        .link-btn:nth-child(3) { animation-delay: 0.25s; }
+        .link-btn:nth-child(4) { animation-delay: 0.3s; }
+        .link-btn:nth-child(5) { animation-delay: 0.35s; }
+        .link-btn:nth-child(6) { animation-delay: 0.4s; }
+        .featured { animation-delay: 0.45s; }
+        .footer { animation-delay: 0.55s; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 420px) {
+            .container {
+                padding: 36px 18px 32px;
+            }
+            .profile-name {
+                font-size: 22px;
+            }
+            .card {
+                min-width: 230px;
+            }
+        }
+
+        /* ===== SCROLL HINT GRADIENT ===== */
+        .cards-wrapper {
+            position: relative;
+        }
+
+        .cards-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40px;
+            height: calc(100% - 12px);
+            background: linear-gradient(to left, var(--bg-primary), transparent);
+            pointer-events: none;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body class="">
+    <!-- 3D Animated Background -->
+    <canvas id="bg-canvas"></canvas>
+    <div class="container">
+        <!-- Profile Header -->
+        <div class="profile animate-in">
+            <div class="avatar-wrapper">
+                <div class="avatar-ring"></div>
+                <img class="avatar-img" src="avatar-hd.png" alt="Nizom Nizamov">
+            </div>
+            <h1 class="profile-name">Nizom Nizamov</h1>
+            <p class="profile-title">Raqamli Marketing Mutaxassisi | UX/UI Dizayner</p>
+            <span class="profile-location">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path></svg>
+                Samarqand, O'zbekiston
+            </span>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="stats-row animate-in">
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Loyihalar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3+</div>
+                <div class="stat-label">Yil Tajriba</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">30+</div>
+                <div class="stat-label">Mijozlar</div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Primary Link Buttons -->
+        <p class="section-label animate-in">Ijtimoiy Tarmoqlar</p>
+        <div class="links">
+            <!-- Telegram -->
+            <a href="https://t.me/nizom_nizamov" target="_blank" class="link-btn animate-in" id="link-telegram">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"></path></svg>
+                </div>
+                <span class="label">Telegram Kanali</span>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/nizom_nizamov" target="_blank" class="link-btn animate-in" id="link-instagram">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"></path></svg>
+                </div>
+                <span class="label">Instagram Sahifa</span>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+
+            <!-- LinkedIn -->
+            <a href="#" target="_blank" class="link-btn animate-in" id="link-linkedin">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+                </div>
+                <span class="label">LinkedIn Profil</span>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+
+            <!-- Portfolio -->
+            <a href="#" target="_blank" class="link-btn animate-in" id="link-portfolio">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                </div>
+                <span class="label">Portfolio Ko'rish</span>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+
+            <!-- YouTube -->
+            <a href="#" target="_blank" class="link-btn animate-in" id="link-youtube">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+                </div>
+                <span class="label">YouTube Kanal</span>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+
+            <!-- Blog / Website -->
+            <a href="#" target="_blank" class="link-btn animate-in" id="link-website">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                </div>
+                <span class="label">Shaxsiy Veb-Sayt</span>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+        </div>
+
+        <!-- Featured / Services -->
+        <div class="featured animate-in">
+            <h2 class="section-title">So'nggi Loyihalar</h2>
+            <div class="cards-wrapper">
+                <div class="cards-scroll">
+                    <!-- Card 1 -->
+                    <div class="card" id="card-marketing">
+                        <canvas class="card-img" id="canvas1" width="520" height="300"></canvas>
+                        <div class="card-body">
+                            <div class="card-divider"></div>
+                            <h3 class="card-title">Raqamli Marketing</h3>
+                            <p class="card-desc">Raqamli reklama kampaniyalari orqali brendlar uchun yuqori daromad va konversiyalarni ta'minlash.</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="card" id="card-uxui">
+                        <canvas class="card-img" id="canvas2" width="520" height="300"></canvas>
+                        <div class="card-body">
+                            <div class="card-divider"></div>
+                            <h3 class="card-title">UX/UI Dizayn</h3>
+                            <p class="card-desc">Foydalanuvchi tajribasini yaxshilovchi zamonaviy va qulay interfeys dizaynlarini yaratish.</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="card" id="card-branding">
+                        <canvas class="card-img" id="canvas3" width="520" height="300"></canvas>
+                        <div class="card-body">
+                            <div class="card-divider"></div>
+                            <h3 class="card-title">Brend Strategiyasi</h3>
+                            <p class="card-desc">Kuchli brend identifikatsiyasi va strategik marketing rejalarini ishlab chiqish.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer animate-in">
+            <div class="social-icons">
+                <a href="https://t.me/nizom_nizamov" target="_blank" class="social-icon" aria-label="Telegram" id="social-telegram">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"></path></svg>
+                </a>
+                <a href="https://www.instagram.com/nizom_nizamov" target="_blank" class="social-icon" aria-label="Instagram" id="social-instagram">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"></path></svg>
+                </a>
+                <a href="#" target="_blank" class="social-icon" aria-label="LinkedIn" id="social-linkedin">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+                </a>
+                <a href="#" target="_blank" class="social-icon" aria-label="YouTube" id="social-youtube">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
+                </a>
+            </div>
+            <p class="copyright">© 2024 Nizom Nizamov. Barcha huquqlar himoyalangan.</p>
+        </footer>
+    </div>
+
+    <script>
+        // ===== Generate beautiful card thumbnails with Canvas =====
+        function drawCardImage(canvasId, hue, label) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+
+            // Background gradient
+            const grad = ctx.createLinearGradient(0, 0, w, h);
+            grad.addColorStop(0, `hsl(${hue}, 60%, 8%)`);
+            grad.addColorStop(1, `hsl(${hue + 30}, 70%, 14%)`);
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, w, h);
+
+            // Decorative circles
+            for (let i = 0; i < 6; i++) {
+                const x = Math.random() * w;
+                const y = Math.random() * h;
+                const r = 30 + Math.random() * 60;
+                const circGrad = ctx.createRadialGradient(x, y, 0, x, y, r);
+                circGrad.addColorStop(0, `hsla(${hue + i * 15}, 80%, 50%, 0.12)`);
+                circGrad.addColorStop(1, 'transparent');
+                ctx.fillStyle = circGrad;
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Grid lines (subtle)
+            ctx.strokeStyle = `hsla(${hue}, 60%, 50%, 0.06)`;
+            ctx.lineWidth = 1;
+            for (let x = 0; x < w; x += 40) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, h);
+                ctx.stroke();
+            }
+            for (let y = 0; y < h; y += 40) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(w, y);
+                ctx.stroke();
+            }
+
+            // Accent geometric shapes
+            ctx.save();
+            ctx.globalAlpha = 0.1;
+            ctx.strokeStyle = `hsl(${hue}, 80%, 60%)`;
+            ctx.lineWidth = 2;
+
+            // Large polygon
+            ctx.beginPath();
+            const cx = w * 0.65, cy = h * 0.45, sides = 6, radius = 70;
+            for (let i = 0; i <= sides; i++) {
+                const angle = (i * 2 * Math.PI / sides) - Math.PI / 2;
+                const px = cx + radius * Math.cos(angle);
+                const py = cy + radius * Math.sin(angle);
+                if (i === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            }
+            ctx.stroke();
+
+            // Small ring
+            ctx.beginPath();
+            ctx.arc(w * 0.2, h * 0.6, 25, 0, Math.PI * 2);
+            ctx.stroke();
+
+            ctx.restore();
+
+            // Glow spot
+            const glowGrad = ctx.createRadialGradient(w * 0.3, h * 0.3, 0, w * 0.3, h * 0.3, 120);
+            glowGrad.addColorStop(0, `hsla(${hue}, 90%, 55%, 0.08)`);
+            glowGrad.addColorStop(1, 'transparent');
+            ctx.fillStyle = glowGrad;
+            ctx.fillRect(0, 0, w, h);
+
+            // Label text
+            ctx.font = '600 16px "Plus Jakarta Sans", sans-serif';
+            ctx.fillStyle = `hsla(${hue}, 70%, 70%, 0.3)`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(label, w / 2, h / 2);
+        }
+
+        // Draw card images after fonts load
+        document.fonts.ready.then(() => {
+            drawCardImage('canvas1', 200, '📊 MARKETING');
+            drawCardImage('canvas2', 260, '🎨 UX/UI DIZAYN');
+            drawCardImage('canvas3', 170, '🚀 BREND');
+        });
+
+        // ===== Staggered entrance animations =====
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-in').forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
+        });
+
+        // Trigger initial animations
+        setTimeout(() => {
+            document.querySelectorAll('.animate-in').forEach(el => {
+                el.style.animationPlayState = 'running';
+            });
+        }, 100);
+
+        // ===== Subtle parallax on mouse move (desktop) =====
+        if (window.matchMedia('(pointer: fine)').matches) {
+            document.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 4;
+                const y = (e.clientY / window.innerHeight - 0.5) * 4;
+                document.querySelector('.container').style.transform =
+                    `perspective(1200px) rotateY(${x}deg) rotateX(${-y}deg)`;
+            });
+            document.querySelector('.container').style.transition = 'transform 0.15s ease-out';
+        }
+
+        // ===== ANTIGRAVITY-STYLE BURST PARTICLES =====
+        (function() {
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+            let w, h;
+
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            // Color palette - blue/cyan/purple tones for dark theme
+            const colors = [
+                [56, 189, 248],   // sky blue
+                [34, 211, 238],   // cyan
+                [99, 102, 241],   // indigo
+                [139, 92, 246],   // purple
+                [6, 182, 212],    // teal
+                [168, 85, 247],   // violet
+                [59, 130, 246],   // blue
+                [129, 140, 248],  // periwinkle
+                [14, 165, 233],   // darker sky
+                [79, 70, 229],    // deep indigo
+            ];
+
+            // Generate particles radiating outward from center
+            const particles = [];
+            const count = 220;
+
+            for (let i = 0; i < count; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const dist = 0.08 + Math.random() * 0.58;
+                const cx = 0.5, cy = 0.42;
+                const nx = cx + Math.cos(angle) * dist;
+                const ny = cy + Math.sin(angle) * dist * 0.8;
+                const c = colors[Math.floor(Math.random() * colors.length)];
+
+                particles.push({
+                    nx, ny,
+                    size: 1.2 + Math.random() * 4.5,
+                    rot: Math.random() * Math.PI * 2,
+                    rotSpeed: (Math.random() - 0.5) * 0.006,
+                    shape: Math.floor(Math.random() * 3), // 0=square, 1=rect, 2=dot
+                    aspect: 0.25 + Math.random() * 0.75,
+                    r: c[0], g: c[1], b: c[2],
+                    alpha: 0.15 + Math.random() * 0.65,
+                    dx: (Math.random() - 0.5) * 0.00006,
+                    dy: (Math.random() - 0.5) * 0.00006,
+                    pulsePhase: Math.random() * Math.PI * 2,
+                    pulseSpeed: 0.002 + Math.random() * 0.006,
+                    dist: dist
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, w, h);
+
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+                    p.nx += p.dx;
+                    p.ny += p.dy;
+                    p.rot += p.rotSpeed;
+                    p.pulsePhase += p.pulseSpeed;
+
+                    if (p.nx < -0.05) p.nx = 1.05;
+                    if (p.nx > 1.05) p.nx = -0.05;
+                    if (p.ny < -0.05) p.ny = 1.05;
+                    if (p.ny > 1.05) p.ny = -0.05;
+
+                    const x = p.nx * w;
+                    const y = p.ny * h;
+                    const pulse = 0.7 + 0.3 * Math.sin(p.pulsePhase);
+                    const a = p.alpha * pulse;
+                    const s = p.size * (w > 600 ? 1 : w / 600);
+
+                    ctx.save();
+                    ctx.translate(x, y);
+                    ctx.rotate(p.rot);
+                    ctx.fillStyle = `rgba(${p.r},${p.g},${p.b},${a})`;
+
+                    if (p.shape === 0) {
+                        ctx.fillRect(-s / 2, -s / 2, s, s);
+                    } else if (p.shape === 1) {
+                        const rw = s;
+                        const rh = s * p.aspect;
+                        ctx.fillRect(-rw / 2, -rh / 2, rw, rh);
+                    } else {
+                        ctx.beginPath();
+                        ctx.arc(0, 0, s * 0.45, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    ctx.restore();
+                }
+
+                requestAnimationFrame(draw);
+            }
+            requestAnimationFrame(draw);
+        })();
+// End of Antigravity burst script
+    </script>
+</body></html>
